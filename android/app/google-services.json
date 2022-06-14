@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "66884138887",
+    "project_id": "job-timer-app-dw",
+    "storage_bucket": "job-timer-app-dw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66884138887:android:04c2e0071c9650c3788522",
+        "android_client_info": {
+          "package_name": "com.example.flutter_job_timer_dw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66884138887-mcgjk88otq5clt6ca5h5898qv232t9c5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnN_N0QEoKj7vbR7ytLUZuS26s5iniJxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66884138887-mcgjk88otq5clt6ca5h5898qv232t9c5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
