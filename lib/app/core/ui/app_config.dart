@@ -19,6 +19,31 @@ class AppConfig {
     },
   );
 
+  static final ThemeData theme3 = ThemeData(
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: const Color(0XFF0066B0),
+      // secondary: const Color(0XFF0066B0),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+      ),
+      labelStyle: TextStyle(color: Colors.black),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    ),
+  );
+
   static final ThemeData theme = ThemeData(
     primarySwatch: _primarySwatch,
     primaryColor: const Color(0XFF0066B0),

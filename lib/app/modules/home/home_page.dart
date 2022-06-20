@@ -1,36 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_job_timer_dw/app/core/database/database.dart';
-import 'package:flutter_job_timer_dw/app/entities/project.dart';
-import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_job_timer_dw/app/modules/home/controller/home_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final HomeController controller;
+  const HomePage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomePage'),
-      ),
-      body: Column(children: [
-        ElevatedButton(
-          onPressed: () async {
-            final db = Modular.get<Database>();
-
-            final connection = await db.openConnetion();
-            connection.writeTxn((isar) {
-              var project = Project();
-
-              project.name = 'Projeto Teste';
-              project.status = ProjectStatus.em_andamento;
-
-              return connection.projects.put(project);
-            });
-          },
-          child: const Text('Cadastrar'),
+      drawer: Drawer(
+        child: SafeArea(
+          child: ListTile(
+            title: const Text(
+              'Sair',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            leading: const Icon(
+              Icons.logout,
+              color: Colors.black87,
+            ),
+            onTap: () => controller.signOut(),
+          ),
         ),
-      ]),
+      ),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: const Text(
+                'Projetos',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              iconTheme: const IconThemeData(color: Colors.white),
+              backgroundColor: Theme.of(context).primaryColor,
+              expandedHeight: 100,
+              toolbarHeight: 100,
+              centerTitle: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(15),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

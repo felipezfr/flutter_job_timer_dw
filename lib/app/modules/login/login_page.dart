@@ -47,8 +47,8 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 width: screenSize.width * 0.8,
                 child: ElevatedButton(
-                  onPressed: () {
-                    controller.signIn();
+                  onPressed: () async {
+                    await controller.signIn();
                   },
                   style: ElevatedButton.styleFrom(primary: Colors.grey[200]),
                   child: Image.asset('assets/images/google.png'),
