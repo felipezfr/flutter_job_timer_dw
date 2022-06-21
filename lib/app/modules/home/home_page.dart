@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_job_timer_dw/app/modules/home/controller/home_controller.dart';
+import 'package:flutter_job_timer_dw/app/modules/home/widgets/header_projects_menu.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller;
@@ -48,6 +49,11 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            SliverPersistentHeader(
+              delegate: HeaderProjectsMenu(
+                controller: controller,
+              ),
+            )
           ],
         ),
       ),
