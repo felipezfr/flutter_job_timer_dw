@@ -1,6 +1,17 @@
-import 'package:equatable/equatable.dart';
+// import 'package:equatable/equatable.dart';
 
-class ProjectRegisterState extends Equatable {
-  @override
-  List<Object?> get props => [];
+part of 'project_register_controller.dart';
+
+enum ProjectRegisterStatus {
+  initial,
+  loading,
+  success,
+  failure,
 }
+
+// class ProjectRegisterState extends Equatable {
+//   final ProjectRegisterStatus status;
+
+//   @override
+//   List<Object?> get props => [];
+// }
