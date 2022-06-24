@@ -1,4 +1,5 @@
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
+import 'package:flutter_job_timer_dw/app/entities/project.dart';
 import 'package:flutter_job_timer_dw/app/view_model/project_task_model.dart';
 
 class ProjectModel {
@@ -15,4 +16,18 @@ class ProjectModel {
     required this.status,
     required this.taks,
   });
+
+  factory ProjectModel.fromEntity(Project project) {
+    project.tasks.loadSync;
+
+    return ProjectModel(
+      id: project.id,
+      name: project.name,
+      estimate: project.estimate,
+      status: project.status,
+      taks: project.tasks
+          .map((task) => ProjectTaskModel.fromEntity(task))
+          .toList(),
+    );
+  }
 }
