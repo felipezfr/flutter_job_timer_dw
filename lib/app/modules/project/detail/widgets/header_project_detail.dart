@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_job_timer_dw/app/modules/home/controller/home_controller.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_controller.dart';
 import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -37,7 +37,6 @@ class HeaderProjectDetail extends StatelessWidget {
           Align(
             alignment: const AlignmentDirectional(0, 1.6),
             child: SizedBox(
-              // margin: const EdgeInsets.symmetric(horizontal: 20),
               width: MediaQuery.of(context).size.width * .85,
               child: Container(
                 decoration: BoxDecoration(
@@ -66,36 +65,41 @@ class HeaderProjectDetail extends StatelessWidget {
                     ),
                     const SizedBox(
                       width: 8,
+                      height: 56,
                     ),
-                    InkWell(
-                      onTap: () async {
-                        await Modular.to.pushNamed(
-                          '/project/task/',
-                          arguments: project,
-                        );
-                        Modular.get<ProjectDetailController>().updateProject();
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 6),
-                            child: CircleAvatar(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 20,
+                    Visibility(
+                      visible: project.status != ProjectStatus.finalizado,
+                      child: InkWell(
+                        onTap: () async {
+                          await Modular.to.pushNamed(
+                            '/project/task/',
+                            arguments: project,
+                          );
+                          Modular.get<ProjectDetailController>()
+                              .updateProject();
+                        },
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 6),
+                              child: CircleAvatar(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
                               ),
                             ),
-                          ),
-                          const Text(
-                            'Adicionar Task',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )
-                        ],
+                            const Text(
+                              'Adicionar Task',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],

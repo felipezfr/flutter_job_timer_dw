@@ -10,7 +10,9 @@ class ProjectDetailController extends Cubit<ProjectDetailState> {
         super(ProjectDetailState.inital());
 
   void setProject(ProjectModel projectModel) {
-    emit(state.copyWith(project: projectModel));
+    emit(state.copyWith(
+        project: projectModel,
+        projectDetailState: ProjectDetailStatus.complete));
   }
 
   Future<void> updateProject() async {

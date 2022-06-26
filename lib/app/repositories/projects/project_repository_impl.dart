@@ -14,6 +14,13 @@ class ProjectRepositoryImpl implements ProjectRepository {
     required Database database,
   }) : _database = database;
 
+  Future<void> resetDatabase() async {
+    final connection = await _database.openConnetion();
+    await connection.writeTxn((isar) {
+      return isar.projects.clear();
+    });
+  }
+
   @override
   Future<void> register(Project project) async {
     try {

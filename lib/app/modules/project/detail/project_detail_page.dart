@@ -1,3 +1,4 @@
+import 'package:asuka/snackbars/asuka_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +7,7 @@ import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_controller.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_state.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/widgets/header_project_detail.dart';
+import 'package:flutter_job_timer_dw/app/modules/project/detail/widgets/pia_chart_detail.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/widgets/task_tile.dart';
 import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 
@@ -19,75 +21,110 @@ class ProjectDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          BlocSelector<ProjectDetailController, ProjectDetailState,
-              ProjectModel>(
-            bloc: controller,
-            selector: (state) => state.project!,
-            builder: (context, project) {
-              return HeaderProjectDetail(project: project);
-            },
+        body: BlocConsumer<ProjectDetailController, ProjectDetailState>(
+      bloc: controller,
+      listener: (context, state) {
+        if (state.projectDetailState == ProjectDetailStatus.failure) {
+          AsukaSnackbar.alert('Erro interno');
+        }
+      },
+      builder: (context, state) {
+        final projectModel = state.project;
+
+        switch (state.projectDetailState) {
+          case ProjectDetailStatus.initial:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          case ProjectDetailStatus.loading:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+
+          case ProjectDetailStatus.failure:
+            AsukaSnackbar.alert('Erro ao carregar projeto.').show();
+            break;
+
+          case ProjectDetailStatus.complete:
+            return Body(
+              project: projectModel!,
+              controller: controller,
+            );
+        }
+        return Container();
+      },
+    ));
+  }
+}
+
+class Body extends StatelessWidget {
+  final ProjectModel project;
+  final ProjectDetailController controller;
+  const Body({
+    Key? key,
+    required this.project,
+    required this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final totalTask = project.tasks.fold<int>(
+      0,
+      (totalValue, task) {
+        return totalValue += task.duration;
+      },
+    );
+
+    return CustomScrollView(
+      slivers: [
+        HeaderProjectDetail(project: project),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 30,
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 30,
-            ),
+        ),
+        SliverToBoxAdapter(
+          child: ProjectPieChart(
+            projectEstimate: project.estimate,
+            totalTask: totalTask,
           ),
-          BlocSelector<ProjectDetailController, ProjectDetailState,
-              ProjectModel>(
-            bloc: controller,
-            selector: (state) => state.project!,
-            builder: (context, project) {
-              return SliverList(
-                delegate: SliverChildListDelegate(
-                    project.tasks.map((task) => TaskTile(task: task)).toList()),
-              );
-            },
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            project.tasks.map((task) => TaskTile(task: task)).toList(),
           ),
-          // SliverList(
-          //   delegate: SliverChildListDelegate(
-          //       project.tasks.map((task) => TaskTile(task: task)).toList()),
-          // ),
-          BlocSelector<ProjectDetailController, ProjectDetailState,
-              ProjectStatus>(
-            bloc: controller,
-            selector: (state) => state.project!.status,
-            builder: (context, projectStatus) {
-              return SliverFillRemaining(
-                child: Visibility(
-                  visible: projectStatus == ProjectStatus.em_andamento,
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          _confirmFinishProject(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          primary: Colors.green,
-                        ),
-                        label: const Text(
-                          'Finalizar Projeto',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        icon: const Icon(
-                          JobTimerIcons.ok_circled2,
-                          color: Colors.white,
-                        ),
-                      ),
+        ),
+        SliverFillRemaining(
+          child: Visibility(
+            visible: project.status == ProjectStatus.em_andamento,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    _confirmFinishProject(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
+                    primary: Colors.green,
+                  ),
+                  label: const Text(
+                    'Finalizar Projeto',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: const Icon(
+                    JobTimerIcons.ok_circled2,
+                    color: Colors.white,
                   ),
                 ),
-              );
-            },
+              ),
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
