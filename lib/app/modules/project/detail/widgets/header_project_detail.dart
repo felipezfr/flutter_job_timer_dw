@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_job_timer_dw/app/modules/home/controller/home_controller.dart';
+import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_controller.dart';
 import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -71,6 +73,7 @@ class HeaderProjectDetail extends StatelessWidget {
                           '/project/task/',
                           arguments: project,
                         );
+                        Modular.get<ProjectDetailController>().updateProject();
                       },
                       child: Row(
                         children: [

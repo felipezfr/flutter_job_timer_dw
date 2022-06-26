@@ -6,4 +6,6 @@ abstract class ProjectService {
   Future<void> register(ProjectModel project);
   Future<List<ProjectModel>> findByStatus(ProjectStatus status);
   Future<void> addTask(int projectId, ProjectTaskModel task);
+  Future<void> finish(int projectId);
+  Future<ProjectModel> findById(int projectId);
 }

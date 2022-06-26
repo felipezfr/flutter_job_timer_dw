@@ -8,7 +8,7 @@ class ProjectDetailModule extends Module {
   @override
   List<Bind<Object>> get binds => [
         BlocBind.lazySingleton(
-          (i) => ProjectDetailController(),
+          (i) => ProjectDetailController(projectService: i()),
         )
       ];
 
@@ -17,8 +17,7 @@ class ProjectDetailModule extends Module {
         ChildRoute('/', child: (context, args) {
           final ProjectModel projectModel = args.data;
           return ProjectDetailPage(
-            project: projectModel,
-          );
+              controller: Modular.get()..setProject(projectModel));
         })
       ];
 }

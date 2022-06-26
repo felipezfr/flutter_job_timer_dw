@@ -38,4 +38,16 @@ class ProjectServiceImpl implements ProjectService {
       ..duration = task.duration;
     await _projectRepository.addTask(projectId, taskEntity);
   }
+
+  @override
+  Future<void> finish(int projectId) async {
+    await _projectRepository.finish(projectId);
+  }
+
+  @override
+  Future<ProjectModel> findById(int projectId) async {
+    final projectEntity = await _projectRepository.findById(projectId);
+    final project = ProjectModel.fromEntity(projectEntity);
+    return project;
+  }
 }

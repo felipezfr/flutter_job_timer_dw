@@ -40,21 +40,42 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
+  Future<Project> findById(int projectId) async {
+    final connection = await _database.openConnetion();
+    final project = await connection.projects.get(projectId);
+
+    if (project == null) {
+      throw Failure(message: 'Projeto não encontrado');
+    }
+    return project;
+  }
+
+  @override
   Future<void> addTask(int projectId, ProjectTask taskEntity) async {
     try {
       final connection = await _database.openConnetion();
-      final project =
-          await connection.projects.filter().idEqualTo(projectId).findFirst();
-
-      if (project == null) {
-        throw Failure(message: 'Projeto não encontrado');
-      }
+      final project = await findById(projectId);
 
       project.tasks.add(taskEntity);
       await connection.writeTxn((isar) => project.tasks.save());
-      // return projects;
     } on IsarError {
-      throw Failure(message: 'Erro ao buscar projetos');
+      throw Failure(message: 'Erro ao salvar task');
+    }
+  }
+
+  @override
+  Future<void> finish(int projectId) async {
+    try {
+      final connection = await _database.openConnetion();
+      final project = await findById(projectId);
+
+      project.status = ProjectStatus.finalizado;
+
+      await connection.writeTxn(
+        (isar) => connection.projects.put(project, saveLinks: true),
+      );
+    } on IsarError {
+      throw Failure(message: 'Erro ao finalizar projeto');
     }
   }
 }

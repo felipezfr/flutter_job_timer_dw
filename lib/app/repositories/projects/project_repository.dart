@@ -6,4 +6,6 @@ abstract class ProjectRepository {
   Future<void> register(Project project);
   Future<List<Project>> findByStatus(ProjectStatus status);
   Future<void> addTask(int projectId, ProjectTask taskEntity);
+  Future<void> finish(int projectId);
+  Future<Project> findById(int projectId);
 }
