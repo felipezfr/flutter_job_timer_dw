@@ -2,12 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/modules/home/controller/home_state.dart';
 import 'package:flutter_job_timer_dw/app/service/auth/auth_service.dart';
+import 'package:flutter_job_timer_dw/app/service/auth/project/project_service.dart';
 
 class HomeController extends Cubit<HomeState> {
   final AuthService _authService;
+  final ProjectService _projectService;
 
-  HomeController({required AuthService authService})
+  HomeController(
+      {required AuthService authService,
+      required ProjectService projectRepository})
       : _authService = authService,
+        _projectService = projectRepository,
         super(HomeState.initial());
 
   Future<void> signOut() async {
@@ -24,12 +29,15 @@ class HomeController extends Cubit<HomeState> {
   }
 
   Future<void> filter(ProjectStatus status) async {
-    emit(state.copyWith(status: HomeStatus.loading));
-    emit(state.copyWith(status: HomeStatus.complete, projectFilter: status));
+    emit(state.copyWith(
+        status: HomeStatus.loading, projectFilter: status, projects: []));
+    final projects = await _projectService.findByStatus(state.projectFilter);
+    emit(state.copyWith(status: HomeStatus.complete, projects: projects));
   }
 
   Future<void> loadProjects() async {
     emit(state.copyWith(status: HomeStatus.loading));
-    emit(state.copyWith(status: HomeStatus.complete));
+    final projects = await _projectService.findByStatus(state.projectFilter);
+    emit(state.copyWith(status: HomeStatus.complete, projects: projects));
   }
 }

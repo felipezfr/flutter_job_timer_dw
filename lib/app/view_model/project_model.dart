@@ -7,25 +7,25 @@ class ProjectModel {
   final String name;
   final int estimate;
   final ProjectStatus status;
-  final List<ProjectTaskModel> taks;
+  final List<ProjectTaskModel> tasks;
 
   ProjectModel({
     this.id,
     required this.name,
     required this.estimate,
     required this.status,
-    required this.taks,
+    required this.tasks,
   });
 
   factory ProjectModel.fromEntity(Project project) {
-    project.tasks.loadSync;
+    project.tasks.loadSync();
 
     return ProjectModel(
       id: project.id,
       name: project.name,
       estimate: project.estimate,
       status: project.status,
-      taks: project.tasks
+      tasks: project.tasks
           .map((task) => ProjectTaskModel.fromEntity(task))
           .toList(),
     );

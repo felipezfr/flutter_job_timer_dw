@@ -2,6 +2,7 @@ import 'package:flutter_job_timer_dw/app/core/database/database.dart';
 import 'package:flutter_job_timer_dw/app/core/exceptions/failure.dart';
 import 'package:flutter_job_timer_dw/app/entities/project.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
 import 'package:isar/isar.dart';
 
 import './project_repository.dart';
@@ -33,6 +34,25 @@ class ProjectRepositoryImpl implements ProjectRepository {
       final projects =
           await connection.projects.filter().statusEqualTo(status).findAll();
       return projects;
+    } on IsarError {
+      throw Failure(message: 'Erro ao buscar projetos');
+    }
+  }
+
+  @override
+  Future<void> addTask(int projectId, ProjectTask taskEntity) async {
+    try {
+      final connection = await _database.openConnetion();
+      final project =
+          await connection.projects.filter().idEqualTo(projectId).findFirst();
+
+      if (project == null) {
+        throw Failure(message: 'Projeto não encontrado');
+      }
+
+      project.tasks.add(taskEntity);
+      await connection.writeTxn((isar) => project.tasks.save());
+      // return projects;
     } on IsarError {
       throw Failure(message: 'Erro ao buscar projetos');
     }
