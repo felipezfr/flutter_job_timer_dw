@@ -44,6 +44,8 @@ dependencies:
   firebase_core: ^1.17.1
   firebase_auth: ^3.3.19
   google_sign_in: ^5.3.3
+  firebase_storage: ^10.2.18
+
   # Firebase end
 
   bloc: ^8.0.3
@@ -54,11 +56,15 @@ dependencies:
   isar: ^2.5.0
   isar_flutter_libs: ^2.5.0 
   path_provider: ^2.0.11
-
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+  # display PDF
+  flutter_pdfview: ^1.2.2
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:

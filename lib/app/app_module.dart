@@ -4,6 +4,7 @@ import 'package:flutter_job_timer_dw/app/modules/home/home_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/login/login_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/project_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/splash/splash_page.dart';
+import 'package:flutter_job_timer_dw/app/modules/storage/storage_module.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_impl.dart';
 import 'package:flutter_job_timer_dw/app/service/auth/auth_service.dart';
@@ -29,5 +30,6 @@ class AppModule extends Module {
         ModuleRoute('/login', module: LoginModule()),
         ModuleRoute('/home', module: HomeModule()),
         ModuleRoute('/project', module: ProjectModule()),
+        ModuleRoute('/storage', module: StorageModule()),
       ];
 }

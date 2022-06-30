@@ -5,6 +5,7 @@ import 'package:flutter_job_timer_dw/app/modules/home/controller/home_state.dart
 import 'package:flutter_job_timer_dw/app/modules/home/widgets/header_projects_menu.dart';
 import 'package:flutter_job_timer_dw/app/modules/home/widgets/project_tile.dart';
 import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller;
@@ -18,16 +19,31 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(
         child: SafeArea(
-          child: ListTile(
-            title: const Text(
-              'Sair',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            leading: const Icon(
-              Icons.logout,
-              color: Colors.black87,
-            ),
-            onTap: () => controller.signOut(),
+          child: Column(
+            children: [
+              ListTile(
+                title: const Text(
+                  'Sair',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                leading: const Icon(
+                  Icons.logout,
+                  color: Colors.black87,
+                ),
+                onTap: () => controller.signOut(),
+              ),
+              ListTile(
+                title: const Text(
+                  'Storage',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                leading: const Icon(
+                  Icons.storage,
+                  color: Colors.black87,
+                ),
+                onTap: () async => await Modular.to.pushNamed('/storage'),
+              ),
+            ],
           ),
         ),
       ),
