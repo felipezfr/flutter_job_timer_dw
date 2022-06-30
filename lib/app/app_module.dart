@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_job_timer_dw/app/core/database/database.dart';
 import 'package:flutter_job_timer_dw/app/core/database/database_impl.dart';
 import 'package:flutter_job_timer_dw/app/modules/home/home_module.dart';
@@ -20,6 +21,7 @@ class AppModule extends Module {
   @override
   List<Bind> binds = [
     Bind.singleton((i) => FirebaseStorage.instance),
+    Bind.singleton((i) => FirebaseFirestore.instance),
     Bind.lazySingleton<StorageRepository>(
         (i) => StorageRepositoryImpl(firebaseStorage: i.get())),
     Bind.lazySingleton<AuthService>((i) => AuthServiceImpl()),
