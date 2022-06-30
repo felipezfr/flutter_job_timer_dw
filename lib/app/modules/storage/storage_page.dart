@@ -22,7 +22,7 @@ class _StoragePageState extends State<StoragePage> {
       body: ElevatedButton(
         onPressed: () async {
           final pdfFile = await Modular.get<StorageRepositoryImpl>()
-              .getPdfFile('Diagrama_Eletrico_Geral_Monza_Monzeiros.pdf');
+              .getFileByUrl('Diagrama_Eletrico_Geral_Monza_Monzeiros.pdf');
 
           Navigator.of(context).push(
             MaterialPageRoute(

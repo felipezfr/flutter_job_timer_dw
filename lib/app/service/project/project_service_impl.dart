@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_job_timer_dw/app/entities/project.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
@@ -49,5 +51,10 @@ class ProjectServiceImpl implements ProjectService {
     final projectEntity = await _projectRepository.findById(projectId);
     final project = ProjectModel.fromEntity(projectEntity);
     return project;
+  }
+
+  @override
+  Future<File> getPdfFile(String url) async {
+    return await _projectRepository.getFileByUrl(url);
   }
 }

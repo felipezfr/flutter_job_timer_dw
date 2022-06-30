@@ -25,7 +25,7 @@ class AppModule extends Module {
     Bind.lazySingleton<AuthService>((i) => AuthServiceImpl()),
     Bind.lazySingleton<Database>((i) => DatabaseImpl()),
     Bind.lazySingleton<ProjectRepository>(
-        (i) => ProjectRepositoryImpl(database: i.get())),
+        (i) => ProjectRepositoryImpl(database: i.get(), storage: i.get())),
     Bind.lazySingleton<ProjectService>(
         (i) => ProjectServiceImpl(projectRepository: i.get())),
   ];

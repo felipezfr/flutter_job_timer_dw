@@ -1,18 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter_job_timer_dw/app/core/database/database.dart';
 import 'package:flutter_job_timer_dw/app/core/exceptions/failure.dart';
 import 'package:flutter_job_timer_dw/app/entities/project.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
+import 'package:flutter_job_timer_dw/app/repositories/storage/storage_repository.dart';
 import 'package:isar/isar.dart';
 
 import './project_repository.dart';
 
 class ProjectRepositoryImpl implements ProjectRepository {
   final Database _database;
+  final StorageRepository _storage;
 
-  ProjectRepositoryImpl({
-    required Database database,
-  }) : _database = database;
+  ProjectRepositoryImpl(
+      {required Database database, required StorageRepository storage})
+      : _database = database,
+        _storage = storage;
 
   Future<void> resetDatabase() async {
     final connection = await _database.openConnetion();
@@ -84,5 +89,10 @@ class ProjectRepositoryImpl implements ProjectRepository {
     } on IsarError {
       throw Failure(message: 'Erro ao finalizar projeto');
     }
+  }
+
+  @override
+  Future<File> getFileByUrl(String url) async {
+    return await _storage.getFileByUrl(url);
   }
 }

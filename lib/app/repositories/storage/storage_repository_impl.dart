@@ -12,11 +12,11 @@ class StorageRepositoryImpl implements StorageRepository {
       : _firebaseStorage = firebaseStorage;
 
   @override
-  Future<File> getPdfFile(String url) async {
+  Future<File> getFileByUrl(String url) async {
     try {
       final refPDF = _firebaseStorage.ref().child(url);
       final data = await refPDF.getData();
-      final file = await StoreFile.storeFile(data!.toList());
+      final file = await StoreFile.storeFile(name: url, bytes: data!.toList());
 
       return file;
     } catch (e) {
