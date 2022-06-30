@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_job_timer_dw/app/core/exceptions/failure.dart';
 
@@ -65,7 +67,7 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepositoryFirebase {
   }
 
   @override
-  Future<String> getFilePathByUrl(String url) {
+  Future<File> getFilePathByUrl(String url) {
     // TODO: implement getFilePathByUrl
     throw UnimplementedError();
   }

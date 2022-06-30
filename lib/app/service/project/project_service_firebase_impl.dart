@@ -22,7 +22,9 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   Future<List<ProjectModel>> findByStatus(ProjectStatus status) async {
     final projects = _projectRepository.findByStatus(status.index);
 
-    return projects.map((e) => ProjectModel.fromMap(e)).toList();
+    return projects
+        .map((e) => e.map((map) => ProjectModel.fromMap(map)).toList())
+        .first;
   }
 
   @override
@@ -33,18 +35,19 @@ class ProjectServiceFirebaseImpl implements ProjectService {
 
   @override
   Future<void> finish(int projectId) async {
-    await _projectRepository.finish(projectId);
+    await _projectRepository.finish(projectId.toString());
   }
 
   @override
   Future<ProjectModel> findById(int projectId) async {
-    final projectEntity = await _projectRepository.findById(projectId);
-    final project = ProjectModel.fromEntity(projectEntity);
+    final projectEntity =
+        await _projectRepository.findById(projectId.toString());
+    final project = ProjectModel.fromMap(projectEntity);
     return project;
   }
 
   @override
   Future<File> getPdfFile(String url) async {
-    return await _projectRepository.getFileByUrl(url);
+    return await _projectRepository.getFilePathByUrl(url);
   }
 }

@@ -47,7 +47,7 @@ class ProjectModel {
     return result;
   }
 
-  factory ProjectModel.fromMap(Map<String, dynamic> map) {
+  factory ProjectModel.fromMap(Map<dynamic, dynamic> map) {
     return ProjectModel(
       id: map['id']?.toInt(),
       name: map['name'] ?? '',
