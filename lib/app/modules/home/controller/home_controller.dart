@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/modules/home/controller/home_state.dart';
 import 'package:flutter_job_timer_dw/app/service/auth/auth_service.dart';
-import 'package:flutter_job_timer_dw/app/service/auth/project/project_service.dart';
+import 'package:flutter_job_timer_dw/app/service/project/project_service.dart';
 
 class HomeController extends Cubit<HomeState> {
   final AuthService _authService;

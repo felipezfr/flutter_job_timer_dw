@@ -7,15 +7,21 @@ import 'package:flutter_job_timer_dw/app/modules/splash/splash_page.dart';
 import 'package:flutter_job_timer_dw/app/modules/storage/storage_module.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_impl.dart';
+import 'package:flutter_job_timer_dw/app/repositories/storage/storage_repository.dart';
+import 'package:flutter_job_timer_dw/app/repositories/storage/storage_repository_impl.dart';
 import 'package:flutter_job_timer_dw/app/service/auth/auth_service.dart';
 import 'package:flutter_job_timer_dw/app/service/auth/auth_service_impl.dart';
-import 'package:flutter_job_timer_dw/app/service/auth/project/project_service.dart';
-import 'package:flutter_job_timer_dw/app/service/auth/project/project_service_impl.dart';
+import 'package:flutter_job_timer_dw/app/service/project/project_service.dart';
+import 'package:flutter_job_timer_dw/app/service/project/project_service_impl.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AppModule extends Module {
   @override
   List<Bind> binds = [
+    Bind.singleton((i) => FirebaseStorage.instance),
+    Bind.lazySingleton<StorageRepository>(
+        (i) => StorageRepositoryImpl(firebaseStorage: i.get())),
     Bind.lazySingleton<AuthService>((i) => AuthServiceImpl()),
     Bind.lazySingleton<Database>((i) => DatabaseImpl()),
     Bind.lazySingleton<ProjectRepository>(
