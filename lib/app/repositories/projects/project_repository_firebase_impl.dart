@@ -87,7 +87,7 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepositoryFirebase {
   @override
   Future<void> register(Map<String, dynamic> project) async {
     final ref = _firestore.collection('projects');
-    // project.remove('id');
+    project.remove('id');
     ref.add(project).catchError(
           (error, stackTrace) => throw Failure(message: error),
         );

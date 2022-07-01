@@ -8,39 +8,35 @@ void main() {
     final datasource =
         ProjectRepositoryFirebaseImpl(firebaseFirestore: firestore);
 
-    // int? id;
-    // late String name;
-    // late int estimate;
-    // late ProjectStatus status;
-    // final tasks = IsarLinks<ProjectTask>();
-
     final project = {
       'id': '123123',
       'name': 'Teste Projeto',
       'estimate': 120,
       'status': 0,
-      'tasks': []
+      'tasks': [],
     };
 
-    datasource.register(project);
+    await datasource.register(project);
 
     final ref = firestore.collection('projects');
     final queues = await ref.get();
 
     expect(queues.docs.length, 1);
-    expect(queues.docs.first['name'], 'Teste Projeto');
     expect(queues.docs.first.data().containsKey('id'), false);
+    expect(queues.docs.first.data()['name'], 'Teste Projeto');
+    expect(queues.docs.first.data()['estimate'], 120);
+    expect(queues.docs.first.data()['status'], 0);
+    expect(queues.docs.first.data()['tasks'], []);
   });
 
-  test('deve retorar um projeto', () async {
+  test('deve retorar um projeto pelo id', () async {
     final firestore = FakeFirebaseFirestore();
     final project = await firestore.collection('projects').add(
       {
-        'id': '123123',
         'name': 'Teste Projeto',
         'estimate': 120,
         'status': 0,
-        'tasks': []
+        'tasks': [],
       },
     );
 
@@ -49,47 +45,73 @@ void main() {
     final result = await datasource.findById(project.id);
 
     expect(result, isA<Map>());
+    expect(result['name'], 'Teste Projeto');
+    expect(result['estimate'], 120);
+    expect(result['status'], 0);
+    expect(result['tasks'], []);
   });
 
   test('deve retorar todos projetos com status em andamento', () async {
     final firestore = FakeFirebaseFirestore();
     final project = await firestore.collection('projects').add(
       {
-        'id': '123123',
         'name': 'Teste Projeto',
         'estimate': 120,
         'status': 0,
-        'tasks': []
+        'tasks': [],
       },
     );
 
     final project2 = await firestore.collection('projects').add(
       {
-        'id': '456485',
         'name': 'Projeto 2',
         'estimate': 48,
         'status': 0,
-        'tasks': []
+        'tasks': [],
+      },
+    );
+    final project3 = await firestore.collection('projects').add(
+      {
+        'name': 'Projeto 3',
+        'estimate': 25,
+        'status': 1,
+        'tasks': [],
       },
     );
 
     final datasource =
         ProjectRepositoryFirebaseImpl(firebaseFirestore: firestore);
-    final result = datasource.findByStatus(0);
+    final result = await datasource.findByStatus(0);
 
-    expect(result, emits(isA<List<Map>>()));
+    expect(result, isA<List<Map>>());
+    expect(result.length, 2);
+    expect(result.first['name'], 'Teste Projeto');
+    expect(result.last['name'], 'Projeto 2');
+  });
+
+  test('deve retorar todos projetos com status finalizado', () async {
+    final firestore = FakeFirebaseFirestore();
+    final project = await firestore.collection('projects').add(
+      {'name': 'Teste Projeto', 'estimate': 120, 'status': 1, 'tasks': []},
+    );
+
+    final project2 = await firestore.collection('projects').add(
+      {'name': 'Projeto 2', 'estimate': 48, 'status': 0, 'tasks': []},
+    );
+
+    final datasource =
+        ProjectRepositoryFirebaseImpl(firebaseFirestore: firestore);
+    final result = await datasource.findByStatus(1);
+
+    expect(result, isA<List<Map>>());
+    expect(result.length, 1);
+    expect(result.first['name'], 'Teste Projeto');
   });
 
   test('deve mudar o status de um projeto para finalizado', () async {
     final firestore = FakeFirebaseFirestore();
     final project = await firestore.collection('projects').add(
-      {
-        'id': '123123',
-        'name': 'Teste Projeto',
-        'estimate': 120,
-        'status': 0,
-        'tasks': []
-      },
+      {'name': 'Teste Projeto', 'estimate': 120, 'status': 0, 'tasks': []},
     );
 
     final datasource =
@@ -100,5 +122,35 @@ void main() {
     final result = await datasource.findById(project.id);
 
     expect(result['status'], 1);
+  });
+
+  test('deve adicionar uma task a um projeto', () async {
+    final firestore = FakeFirebaseFirestore();
+    final project = await firestore.collection('projects').add(
+      {'name': 'Teste Projeto task', 'estimate': 98, 'status': 0, 'tasks': []},
+    );
+
+    final task = {
+      'name': 'Nova task',
+      'duration': 12,
+    };
+    final task2 = {
+      'name': 'Segunda task',
+      'duration': 24,
+    };
+
+    final datasource =
+        ProjectRepositoryFirebaseImpl(firebaseFirestore: firestore);
+
+    await datasource.addTask(project.id, task);
+    await datasource.addTask(project.id, task2);
+
+    final result = await datasource.findById(project.id);
+
+    expect(result['tasks'], isA<List>());
+    expect(result['tasks'].first['name'], 'Nova task');
+    expect(result['tasks'].first['duration'], 12);
+    expect(result['tasks'].last['name'], 'Segunda task');
+    expect(result['tasks'].last['duration'], 24);
   });
 }
