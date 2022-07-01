@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_job_timer_dw/app/core/exceptions/failure.dart';
+import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
 
-import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_firebase.dart';
-
-class ProjectRepositoryFirebaseImpl extends ProjectRepositoryFirebase {
+class ProjectRepositoryFirebaseImpl extends ProjectRepository {
   final FirebaseFirestore _firestore;
 
   ProjectRepositoryFirebaseImpl({

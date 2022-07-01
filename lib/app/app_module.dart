@@ -6,7 +6,7 @@ import 'package:flutter_job_timer_dw/app/modules/login/login_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/project_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/splash/splash_page.dart';
 import 'package:flutter_job_timer_dw/app/modules/storage/storage_module.dart';
-import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_firebase.dart';
+import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_firebase_impl.dart';
 import 'package:flutter_job_timer_dw/app/repositories/storage/storage_repository.dart';
 import 'package:flutter_job_timer_dw/app/repositories/storage/storage_repository_impl.dart';
@@ -26,14 +26,14 @@ class AppModule extends Module {
         (i) => StorageRepositoryImpl(firebaseStorage: i.get())),
     Bind.lazySingleton<AuthService>((i) => AuthServiceImpl()),
     Bind.lazySingleton<Database>((i) => DatabaseImpl()),
-    // Bind.lazySingleton<ProjectRepository>(
-    //     (i) => ProjectRepositoryImpl(database: i.get(), storage: i.get())),
-    Bind.lazySingleton<ProjectRepositoryFirebase>(
+    Bind.lazySingleton<ProjectRepository>(
         (i) => ProjectRepositoryFirebaseImpl(firebaseFirestore: i.get())),
-    // Bind.lazySingleton<ProjectService>(
-    //     (i) => ProjectServiceImpl(projectRepository: i.get())),
     Bind.lazySingleton<ProjectService>(
         (i) => ProjectServiceFirebaseImpl(projectRepository: i.get())),
+    // Bind.lazySingleton<ProjectRepository>(
+    //     (i) => ProjectRepositoryImpl(database: i.get(), storage: i.get())),
+    // Bind.lazySingleton<ProjectService>(
+    //     (i) => ProjectServiceImpl(projectRepository: i.get())),
   ];
 
   @override

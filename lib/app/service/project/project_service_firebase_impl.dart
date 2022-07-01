@@ -1,5 +1,5 @@
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
-import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_firebase.dart';
+import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
 import 'dart:io';
 
 import 'package:flutter_job_timer_dw/app/service/project/project_service.dart';
@@ -7,11 +7,11 @@ import 'package:flutter_job_timer_dw/app/view_model/project_task_model.dart';
 import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 
 class ProjectServiceFirebaseImpl implements ProjectService {
-  final ProjectRepositoryFirebase _projectRepository;
+  final ProjectRepository _projectRepository;
 
-  ProjectServiceFirebaseImpl(
-      {required ProjectRepositoryFirebase projectRepository})
+  ProjectServiceFirebaseImpl({required ProjectRepository projectRepository})
       : _projectRepository = projectRepository;
+
   @override
   Future<void> register(ProjectModel project) async {
     final projectMap = project.toMap();
@@ -23,7 +23,6 @@ class ProjectServiceFirebaseImpl implements ProjectService {
     final projectsMap = await _projectRepository.findByStatus(status.index);
 
     return projectsMap.map((proj) => ProjectModel.fromMap(proj)).toList();
-
     // return projects
     //     .map((e) => e.map((map) => ProjectModel.fromMap(map)).toList())
     //     .first;
