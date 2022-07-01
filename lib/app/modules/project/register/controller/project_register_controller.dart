@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 
 import 'package:flutter_job_timer_dw/app/service/project/project_service.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 
 part 'project_register_state.dart';
 
@@ -16,7 +16,7 @@ class ProjectRegisterController extends Cubit<ProjectRegisterStatus> {
   Future<void> register(String name, int estimate) async {
     try {
       emit(ProjectRegisterStatus.loading);
-      final project = ProjectModel(
+      final project = ProjectEntity(
         name: name,
         estimate: estimate,
         tasks: [],

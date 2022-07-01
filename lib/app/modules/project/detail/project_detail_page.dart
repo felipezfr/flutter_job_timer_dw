@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_job_timer_dw/app/core/ui/job_timer_icons.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_controller.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_state.dart';
@@ -58,7 +59,7 @@ class ProjectDetailPage extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
-  final ProjectModel project;
+  final ProjectEntity project;
   final ProjectDetailController controller;
   const Body({
     Key? key,

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 
 enum HomeStatus {
   initial,
@@ -12,7 +12,7 @@ enum HomeStatus {
 
 class HomeState extends Equatable {
   final HomeStatus status;
-  final List<ProjectModel> projects;
+  final List<ProjectEntity> projects;
   final ProjectStatus projectFilter;
   final String? errorMessage;
 
@@ -40,7 +40,7 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     HomeStatus? status,
-    List<ProjectModel>? projects,
+    List<ProjectEntity>? projects,
     ProjectStatus? projectFilter,
     String? errorMessage,
   }) {

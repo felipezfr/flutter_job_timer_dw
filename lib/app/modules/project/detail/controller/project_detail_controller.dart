@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 
 import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_state.dart';
 import 'package:flutter_job_timer_dw/app/service/project/project_service.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 
 class ProjectDetailController extends Cubit<ProjectDetailState> {
   final ProjectService _projectService;
@@ -10,9 +10,9 @@ class ProjectDetailController extends Cubit<ProjectDetailState> {
       : _projectService = projectService,
         super(ProjectDetailState.inital());
 
-  void setProject(ProjectModel projectModel) {
+  void setProject(ProjectEntity projectEntity) {
     emit(state.copyWith(
-        project: projectModel,
+        project: projectEntity,
         projectDetailState: ProjectDetailStatus.complete));
   }
 

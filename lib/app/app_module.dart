@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_job_timer_dw/app/core/database/database.dart';
-import 'package:flutter_job_timer_dw/app/core/database/database_impl.dart';
 import 'package:flutter_job_timer_dw/app/modules/home/home_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/login/login_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/project_module.dart';
@@ -25,7 +23,7 @@ class AppModule extends Module {
     Bind.lazySingleton<StorageRepository>(
         (i) => StorageRepositoryImpl(firebaseStorage: i.get())),
     Bind.lazySingleton<AuthService>((i) => AuthServiceImpl()),
-    Bind.lazySingleton<Database>((i) => DatabaseImpl()),
+    // Bind.lazySingleton<Database>((i) => DatabaseImpl()),
     Bind.lazySingleton<ProjectRepository>(
         (i) => ProjectRepositoryFirebaseImpl(firebaseFirestore: i.get())),
     Bind.lazySingleton<ProjectService>(

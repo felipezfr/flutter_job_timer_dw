@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/project_detail_controller.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HeaderProjectDetail extends StatelessWidget {
@@ -10,7 +10,7 @@ class HeaderProjectDetail extends StatelessWidget {
     required this.project,
   }) : super(key: key);
 
-  final ProjectModel project;
+  final ProjectEntity project;
 
   @override
   Widget build(BuildContext context) {

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_job_timer_dw/app/core/ui/job_timer_icons.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/modules/home/controller/home_controller.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ProjectTile extends StatelessWidget {
-  final ProjectModel projectModel;
+  final ProjectEntity projectEntity;
 
-  const ProjectTile({super.key, required this.projectModel});
+  const ProjectTile({super.key, required this.projectEntity});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        await Modular.to.pushNamed('/project/detail/', arguments: projectModel);
+        await Modular.to
+            .pushNamed('/project/detail/', arguments: projectEntity);
         Modular.get<HomeController>().loadProjects();
       },
       child: Container(
@@ -27,8 +28,8 @@ class ProjectTile extends StatelessWidget {
               )),
           child: Column(
             children: [
-              _ProjectName(projectModel: projectModel),
-              Expanded(child: _ProjectProgress(projectModel: projectModel)),
+              _ProjectName(projectEntity: projectEntity),
+              Expanded(child: _ProjectProgress(projectEntity: projectEntity)),
             ],
           )),
     );
@@ -36,9 +37,9 @@ class ProjectTile extends StatelessWidget {
 }
 
 class _ProjectName extends StatelessWidget {
-  final ProjectModel projectModel;
+  final ProjectEntity projectEntity;
 
-  const _ProjectName({required this.projectModel});
+  const _ProjectName({required this.projectEntity});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class _ProjectName extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(projectModel.name),
+          Text(projectEntity.name),
           Icon(
             JobTimerIcons.angle_double_right,
             color: Theme.of(context).primaryColor,
@@ -60,19 +61,19 @@ class _ProjectName extends StatelessWidget {
 }
 
 class _ProjectProgress extends StatelessWidget {
-  final ProjectModel projectModel;
+  final ProjectEntity projectEntity;
 
-  const _ProjectProgress({required this.projectModel});
+  const _ProjectProgress({required this.projectEntity});
 
   @override
   Widget build(BuildContext context) {
-    final totalTasks = projectModel.tasks
+    final totalTasks = projectEntity.tasks
         .fold<int>(0, (previousValue, task) => previousValue += task.duration);
 
     var percent = 0.0;
 
     if (totalTasks > 0) {
-      percent = totalTasks / projectModel.estimate;
+      percent = totalTasks / projectEntity.estimate;
     }
 
     return Container(
@@ -90,7 +91,7 @@ class _ProjectProgress extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Text('${projectModel.estimate}h'),
+            child: Text('${projectEntity.estimate}h'),
           )
         ],
       ),

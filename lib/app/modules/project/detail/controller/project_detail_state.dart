@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 
 enum ProjectDetailStatus {
   initial,
@@ -10,7 +9,7 @@ enum ProjectDetailStatus {
 }
 
 class ProjectDetailState extends Equatable {
-  late final ProjectModel? project;
+  late final ProjectEntity? project;
   late ProjectDetailStatus projectDetailState;
   ProjectDetailState._({
     required this.project,
@@ -27,7 +26,7 @@ class ProjectDetailState extends Equatable {
   List<Object?> get props => [project, projectDetailState];
 
   ProjectDetailState copyWith({
-    ProjectModel? project,
+    ProjectEntity? project,
     ProjectDetailStatus? projectDetailState,
   }) {
     return ProjectDetailState._(

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_job_timer_dw/app/entities/project.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/view_model/project_task_model.dart';
 
@@ -19,8 +19,8 @@ class ProjectModel {
     required this.tasks,
   });
 
-  factory ProjectModel.fromEntity(Project project) {
-    project.tasks.loadSync();
+  factory ProjectModel.fromEntity(ProjectEntity project) {
+    // project.tasks.loadSync();
 
     return ProjectModel(
       id: project.id.toString(),

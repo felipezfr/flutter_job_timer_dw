@@ -1,10 +1,12 @@
+import 'package:flutter_job_timer_dw/app/core/adapters/json_to_project.dart';
+import 'package:flutter_job_timer_dw/app/core/adapters/json_to_task.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
 import 'dart:io';
 
 import 'package:flutter_job_timer_dw/app/service/project/project_service.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_task_model.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 
 class ProjectServiceFirebaseImpl implements ProjectService {
   final ProjectRepository _projectRepository;
@@ -13,24 +15,24 @@ class ProjectServiceFirebaseImpl implements ProjectService {
       : _projectRepository = projectRepository;
 
   @override
-  Future<void> register(ProjectModel project) async {
-    final projectMap = project.toMap();
+  Future<void> register(ProjectEntity project) async {
+    final projectMap = JsonToProject.toMap(project);
     await _projectRepository.register(projectMap);
   }
 
   @override
-  Future<List<ProjectModel>> findByStatus(ProjectStatus status) async {
+  Future<List<ProjectEntity>> findByStatus(ProjectStatus status) async {
     final projectsMap = await _projectRepository.findByStatus(status.index);
 
-    return projectsMap.map((proj) => ProjectModel.fromMap(proj)).toList();
+    return projectsMap.map((proj) => JsonToProject.fromMap(proj)).toList();
     // return projects
     //     .map((e) => e.map((map) => ProjectModel.fromMap(map)).toList())
     //     .first;
   }
 
   @override
-  Future<void> addTask(String projectId, ProjectTaskModel task) async {
-    final taskMap = task.toMap();
+  Future<void> addTask(String projectId, ProjectTask task) async {
+    final taskMap = JsonToTask.toMap(task);
     await _projectRepository.addTask(projectId, taskMap);
   }
 
@@ -40,9 +42,9 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   }
 
   @override
-  Future<ProjectModel> findById(String projectId) async {
+  Future<ProjectEntity> findById(String projectId) async {
     final projectEntity = await _projectRepository.findById(projectId);
-    final project = ProjectModel.fromMap(projectEntity);
+    final project = JsonToProject.fromMap(projectEntity);
     return project;
   }
 
