@@ -1,6 +1,6 @@
-import 'package:flutter_job_timer_dw/app/core/adapters/json_to_project_status.dart';
 import 'package:flutter_job_timer_dw/app/core/adapters/json_to_task.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 
 class JsonToProject {
   static ProjectEntity fromMap(dynamic json) {
@@ -8,7 +8,7 @@ class JsonToProject {
       id: json['id'],
       name: json['name'],
       estimate: json['estimate'],
-      status: JsonToProjectStatus.fromMap(json['status']?.toInt()),
+      status: ProjectStatus.values[json['status']],
       tasks: [
         if (json.containsKey('tasks'))
           ...(json['tasks'] as List).map(JsonToTask.fromMap).toList()
@@ -21,7 +21,7 @@ class JsonToProject {
       'id': proj.id,
       'name': proj.name,
       'estimate': proj.estimate,
-      'status': proj.status,
+      'status': proj.status.name,
       'tasks': proj.tasks.map((task) => JsonToTask.toMap(task)).toList(),
     };
   }
