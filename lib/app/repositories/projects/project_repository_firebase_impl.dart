@@ -14,7 +14,14 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepositoryFirebase {
 
   @override
   Future<void> addTask(
-      String projectId, Map<String, dynamic> taskEntity) async {}
+      String projectId, Map<String, dynamic> taskEntity) async {
+    final doc = _firestore.collection('projects').doc(projectId);
+    await doc.update(
+      {
+        'tasks': FieldValue.arrayUnion([taskEntity]),
+      },
+    );
+  }
 
   // @override
   // Stream<Map> findById(String projectId) {
@@ -47,11 +54,16 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepositoryFirebase {
   }
 
   @override
-  Stream<List<Map>> findByStatus(int status) {
+  Future<List<Map>> findByStatus(int status) async {
     final ref = _firestore.collection('projects');
-    final snapshot = ref.where('status', isEqualTo: status).snapshots();
-
-    return snapshot.map((event) => event.docs).map(_convert);
+    final proj = await ref.where('status', isEqualTo: status).get();
+    final docsList = proj.docs
+        .map((document) => {
+              'id': document.id,
+              ...document.data(),
+            })
+        .toList();
+    return docsList;
   }
 
   @override
@@ -75,8 +87,10 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepositoryFirebase {
   @override
   Future<void> register(Map<String, dynamic> project) async {
     final ref = _firestore.collection('projects');
-    project.remove('id');
-    ref.add(project);
+    // project.remove('id');
+    ref.add(project).catchError(
+          (error, stackTrace) => throw Failure(message: error),
+        );
   }
 
   List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {

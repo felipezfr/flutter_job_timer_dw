@@ -23,7 +23,7 @@ class TaskController extends Cubit<TaskStatus> {
       duration: duration,
     );
 
-    await _projectService.addTask(_projectModel.id!, task);
+    await _projectService.addTask(_projectModel.id.toString(), task);
     emit(TaskStatus.success);
   }
 }

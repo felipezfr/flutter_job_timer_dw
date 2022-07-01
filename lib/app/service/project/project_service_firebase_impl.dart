@@ -20,28 +20,29 @@ class ProjectServiceFirebaseImpl implements ProjectService {
 
   @override
   Future<List<ProjectModel>> findByStatus(ProjectStatus status) async {
-    final projects = _projectRepository.findByStatus(status.index);
+    final projectsMap = await _projectRepository.findByStatus(status.index);
 
-    return projects
-        .map((e) => e.map((map) => ProjectModel.fromMap(map)).toList())
-        .first;
+    return projectsMap.map((proj) => ProjectModel.fromMap(proj)).toList();
+
+    // return projects
+    //     .map((e) => e.map((map) => ProjectModel.fromMap(map)).toList())
+    //     .first;
   }
 
   @override
-  Future<void> addTask(int projectId, ProjectTaskModel task) async {
+  Future<void> addTask(String projectId, ProjectTaskModel task) async {
     final taskMap = task.toMap();
-    await _projectRepository.addTask(projectId.toString(), taskMap);
+    await _projectRepository.addTask(projectId, taskMap);
   }
 
   @override
-  Future<void> finish(int projectId) async {
-    await _projectRepository.finish(projectId.toString());
+  Future<void> finish(String projectId) async {
+    await _projectRepository.finish(projectId);
   }
 
   @override
-  Future<ProjectModel> findById(int projectId) async {
-    final projectEntity =
-        await _projectRepository.findById(projectId.toString());
+  Future<ProjectModel> findById(String projectId) async {
+    final projectEntity = await _projectRepository.findById(projectId);
     final project = ProjectModel.fromMap(projectEntity);
     return project;
   }
