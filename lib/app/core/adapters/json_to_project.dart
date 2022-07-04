@@ -21,7 +21,7 @@ class JsonToProject {
       'id': proj.id,
       'name': proj.name,
       'estimate': proj.estimate,
-      'status': proj.status.name,
+      'status': proj.status.index,
       'tasks': proj.tasks.map((task) => JsonToTask.toMap(task)).toList(),
     };
   }

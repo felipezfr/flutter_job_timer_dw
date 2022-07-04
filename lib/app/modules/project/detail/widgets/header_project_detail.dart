@@ -75,7 +75,7 @@ class HeaderProjectDetail extends StatelessWidget {
                             '/project/task/',
                             arguments: project,
                           );
-                          Modular.get<ProjectDetailController>()
+                          await Modular.get<ProjectDetailController>()
                               .updateProject();
                         },
                         child: Row(

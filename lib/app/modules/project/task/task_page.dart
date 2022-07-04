@@ -81,7 +81,23 @@ class _TaskPageState extends State<TaskPage> {
                   width: MediaQuery.of(context).size.width,
                   height: 49,
                   child: ElevatedButton(
-                    child: const Text('Salvar'),
+                    child: BlocSelector<TaskController, TaskStatus, bool>(
+                      bloc: widget.controller,
+                      selector: (state) => state == TaskStatus.loading,
+                      builder: (context, state) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Center(child: Text('Salvar')),
+                            const SizedBox(width: 20),
+                            Visibility(
+                              visible: state,
+                              child: const CircularProgressIndicator(),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                     onPressed: () {
                       final formValid =
                           _formKey.currentState?.validate() ?? false;

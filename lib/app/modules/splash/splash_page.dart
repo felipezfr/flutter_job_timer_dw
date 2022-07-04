@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -17,13 +16,13 @@ class _SplashPageState extends State<SplashPage> {
     // Modular.get<AuthService>().signOut();
     Modular.to.navigate('/home/');
 
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        Modular.to.navigate('/login/');
-      } else {
-        Modular.to.navigate('/home/');
-      }
-    });
+    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    //   if (user == null) {
+    //     Modular.to.navigate('/login/');
+    //   } else {
+    //     Modular.to.navigate('/home/');
+    //   }
+    // });
   }
 
   @override

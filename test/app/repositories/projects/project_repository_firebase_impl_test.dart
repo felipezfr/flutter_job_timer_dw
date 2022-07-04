@@ -33,6 +33,7 @@ void main() {
     final firestore = FakeFirebaseFirestore();
     final project = await firestore.collection('projects').add(
       {
+        // 'id': 'HdhausdhAdha',
         'name': 'Teste Projeto',
         'estimate': 120,
         'status': 0,
@@ -45,6 +46,7 @@ void main() {
     final result = await datasource.findById(project.id);
 
     expect(result, isA<Map>());
+    expect(result['id'], project.id);
     expect(result['name'], 'Teste Projeto');
     expect(result['estimate'], 120);
     expect(result['status'], 0);
@@ -92,11 +94,21 @@ void main() {
   test('deve retorar todos projetos com status finalizado', () async {
     final firestore = FakeFirebaseFirestore();
     final project = await firestore.collection('projects').add(
-      {'name': 'Teste Projeto', 'estimate': 120, 'status': 1, 'tasks': []},
+      {
+        'name': 'Teste Projeto',
+        'estimate': 120,
+        'status': 1,
+        'tasks': [],
+      },
     );
 
     final project2 = await firestore.collection('projects').add(
-      {'name': 'Projeto 2', 'estimate': 48, 'status': 0, 'tasks': []},
+      {
+        'name': 'Projeto 2',
+        'estimate': 48,
+        'status': 0,
+        'tasks': [],
+      },
     );
 
     final datasource =
@@ -111,7 +123,12 @@ void main() {
   test('deve mudar o status de um projeto para finalizado', () async {
     final firestore = FakeFirebaseFirestore();
     final project = await firestore.collection('projects').add(
-      {'name': 'Teste Projeto', 'estimate': 120, 'status': 0, 'tasks': []},
+      {
+        'name': 'Teste Projeto',
+        'estimate': 120,
+        'status': 0,
+        'tasks': [],
+      },
     );
 
     final datasource =
@@ -127,7 +144,12 @@ void main() {
   test('deve adicionar uma task a um projeto', () async {
     final firestore = FakeFirebaseFirestore();
     final project = await firestore.collection('projects').add(
-      {'name': 'Teste Projeto task', 'estimate': 98, 'status': 0, 'tasks': []},
+      {
+        'name': 'Teste Projeto task',
+        'estimate': 98,
+        'status': 0,
+        'tasks': [],
+      },
     );
 
     final task = {
