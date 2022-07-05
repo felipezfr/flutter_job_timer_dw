@@ -8,6 +8,7 @@ class JsonToProject {
       id: json['id'],
       name: json['name'],
       estimate: json['estimate'],
+      // status: JsonToProjectStatus.fromMap(json['status']),
       status: ProjectStatus.values[json['status']],
       tasks: [
         if (json.containsKey('tasks'))
@@ -21,7 +22,7 @@ class JsonToProject {
       'id': proj.id,
       'name': proj.name,
       'estimate': proj.estimate,
-      'status': proj.status.name,
+      'status': proj.status.index,
       'tasks': proj.tasks.map((task) => JsonToTask.toMap(task)).toList(),
     };
   }

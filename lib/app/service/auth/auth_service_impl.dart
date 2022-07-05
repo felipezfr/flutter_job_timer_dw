@@ -14,7 +14,11 @@ class AuthServiceImpl implements AuthService {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override

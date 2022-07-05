@@ -11,8 +11,8 @@ void main() {
         'id': 'aZasdAASDnasdj',
         'name': 'Teste Projeto',
         'estimate': 120,
-        // 'status': 0,
-        'status': 'em_andamento',
+        'status': 0,
+        // 'status': 'em_andamento',
         'tasks': [
           {
             'name': 'Nova task',

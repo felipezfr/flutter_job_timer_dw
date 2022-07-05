@@ -3,6 +3,7 @@ part of 'login_controller.dart';
 enum LoginStatus {
   initial,
   loading,
+  complete,
   failure,
 }
 

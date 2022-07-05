@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 enum ProjectStatus {
   em_andamento(label: 'Em andamento'),
   finalizado(label: 'Finalizado');
