@@ -170,8 +170,10 @@ void main() {
     final result = await datasource.findById(project.id);
 
     expect(result['tasks'], isA<List>());
+    expect(result['tasks'].first['id'], isNotNull);
     expect(result['tasks'].first['name'], 'Nova task');
     expect(result['tasks'].first['duration'], 12);
+    expect(result['tasks'].last['id'], isNotNull);
     expect(result['tasks'].last['name'], 'Segunda task');
     expect(result['tasks'].last['duration'], 24);
   });

@@ -15,6 +15,12 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepository {
   Future<void> addTask(
       String projectId, Map<String, dynamic> taskEntity) async {
     final doc = _firestore.collection('projects').doc(projectId);
+    taskEntity['id'] =
+        taskEntity['id'] ?? DateTime.now().microsecondsSinceEpoch.toString();
+    // final task = {
+    //   'id': taskId,
+    //   ...taskEntity,
+    // };
     await doc.update(
       {
         'tasks': FieldValue.arrayUnion([taskEntity]),
