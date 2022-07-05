@@ -46,6 +46,7 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepository {
       final ref = _firestore.collection('projects');
       final doc = await ref.doc(projectId).get();
       final data = doc.data()!;
+      data.addAll({'id': doc.id});
       return data;
     } catch (e) {
       throw Exception(e.toString());

@@ -10,7 +10,6 @@ import 'package:flutter_job_timer_dw/app/modules/project/detail/controller/proje
 import 'package:flutter_job_timer_dw/app/modules/project/detail/widgets/header_project_detail.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/widgets/pia_chart_detail.dart';
 import 'package:flutter_job_timer_dw/app/modules/project/detail/widgets/task_tile.dart';
-import 'package:flutter_job_timer_dw/app/view_model/project_model.dart';
 
 class ProjectDetailPage extends StatelessWidget {
   final ProjectDetailController controller;

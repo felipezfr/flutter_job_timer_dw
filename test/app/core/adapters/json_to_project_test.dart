@@ -1,6 +1,7 @@
 import 'package:flutter_job_timer_dw/app/core/adapters/json_to_project.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
+import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -12,7 +13,6 @@ void main() {
         'name': 'Teste Projeto',
         'estimate': 120,
         'status': 0,
-        // 'status': 'em_andamento',
         'tasks': [
           {
             'name': 'Nova task',
@@ -22,7 +22,11 @@ void main() {
       });
 
       expect(order, isA<ProjectEntity>());
+      expect(order.id, 'aZasdAASDnasdj');
       expect(order.status, ProjectStatus.em_andamento);
+      expect(order.tasks.length, 1);
+      expect(order.tasks.first.name, 'Nova task');
+      expect(order.tasks.first.duration, 12);
     },
   );
 
@@ -32,7 +36,7 @@ void main() {
       name: 'Projeto Entidade',
       estimate: 20,
       status: ProjectStatus.em_andamento,
-      tasks: [],
+      tasks: [ProjectTask(name: 'Task1', duration: 22)],
     );
 
     final map = JsonToProject.toMap(order);
@@ -40,6 +44,9 @@ void main() {
     expect(map, isA<Map<String, dynamic>>());
     expect(map['id'], '12345');
     expect(map['name'], 'Projeto Entidade');
-    expect(map['status'], 'em_andamento');
+    expect(map['status'], 0);
+    expect(map['tasks'].length, 1);
+    expect((map['tasks'] as List).first['name'], 'Task1');
+    expect((map['tasks'] as List).first['duration'], 22);
   });
 }
