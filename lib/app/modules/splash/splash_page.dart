@@ -17,7 +17,6 @@ class _SplashPageState extends State<SplashPage> {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         // Modular.get<AuthService>().signOut();
-
         Modular.to.navigate('/login/');
       } else {
         Modular.to.navigate('/home/');

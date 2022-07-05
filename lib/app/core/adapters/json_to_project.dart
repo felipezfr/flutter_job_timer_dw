@@ -7,7 +7,7 @@ class JsonToProject {
     return ProjectEntity(
       id: json['id'],
       name: json['name'],
-      estimate: json['estimate'],
+      estimate: json['estimate'].toInt(),
       // status: JsonToProjectStatus.fromMap(json['status']),
       status: ProjectStatus.values[json['status']],
       tasks: [
