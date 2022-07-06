@@ -1,5 +1,5 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_firebase_impl.dart';
+import 'package:flutter_job_timer_dw/app/repositories/projects/project_firebase_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

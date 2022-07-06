@@ -4,6 +4,7 @@ abstract class ProjectRepository {
   Future<void> register(Map<String, dynamic> project);
   // Stream<List<Map>> findByStatus(int status);
   Future<List<Map>> findByStatus(int status);
+  Stream<List<Map>> findByStatusStream(int status);
 
   Future<void> addTask(String projectId, Map<String, dynamic> taskEntity);
   Future<void> finish(String projectId);

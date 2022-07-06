@@ -107,4 +107,15 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepository {
             })
         .toList();
   }
+
+  @override
+  Stream<List<Map>> findByStatusStream(int status) {
+    final ref = _firestore.collection('projects');
+
+    return ref.snapshots().map((querySnap) => querySnap.docs
+        .map(
+          (doc) => doc.data(),
+        )
+        .toList());
+  }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_job_timer_dw/app/modules/project/project_module.dart';
 import 'package:flutter_job_timer_dw/app/modules/splash/splash_page.dart';
 import 'package:flutter_job_timer_dw/app/modules/storage/storage_module.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
-import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository_firebase_impl.dart';
+import 'package:flutter_job_timer_dw/app/repositories/projects/project_firebase_repository_impl.dart';
 import 'package:flutter_job_timer_dw/app/repositories/storage/storage_repository.dart';
 import 'package:flutter_job_timer_dw/app/repositories/storage/storage_repository_impl.dart';
 import 'package:flutter_job_timer_dw/app/service/auth/auth_service.dart';
@@ -36,7 +36,6 @@ class AppModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        // ChildRoute('/', child: (context, args) => const SplashPage()),
         ChildRoute('/', child: (context, args) => const SplashPage()),
         ModuleRoute('/login', module: LoginModule()),
         ModuleRoute('/home', module: HomeModule()),
