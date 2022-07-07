@@ -13,6 +13,9 @@ void main() {
   late AuthServiceMock authService;
   late HomeController bloc;
 
+  final proj = Project(
+      name: 'name', estimate: 2, status: ProjectStatus.em_andamento, tasks: []);
+
   setUp(
     () {
       projectService = ProjectServiceMock();
@@ -70,8 +73,7 @@ void main() {
       verify(() => authService.signOut()).called(1);
     },
   );
-  final proj = Project(
-      name: 'name', estimate: 2, status: ProjectStatus.em_andamento, tasks: []);
+
   blocTest<HomeController, HomeState>(
     'Home bloc loadProjects ',
     build: () {
