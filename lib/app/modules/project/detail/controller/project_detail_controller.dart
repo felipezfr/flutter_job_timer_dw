@@ -10,7 +10,7 @@ class ProjectDetailController extends Cubit<ProjectDetailState> {
       : _projectService = projectService,
         super(ProjectDetailState.inital());
 
-  void setProject(ProjectEntity projectEntity) {
+  void setProject(Project projectEntity) {
     emit(state.copyWith(
         project: projectEntity,
         projectDetailState: ProjectDetailStatus.complete));

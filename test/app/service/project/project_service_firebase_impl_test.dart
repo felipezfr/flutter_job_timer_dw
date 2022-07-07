@@ -46,7 +46,7 @@ void main() {
     final service = ProjectServiceFirebaseImpl(projectRepository: repository);
     final result = await service.findByStatus(ProjectStatus.em_andamento);
 
-    expect(result, isA<List<ProjectEntity>>());
+    expect(result, isA<List<Project>>());
     expect(result.length, 2);
     expect(result.first.id, 'aZasdAASDnasdj');
     expect(result.first.name, 'Teste Projeto');
@@ -59,7 +59,7 @@ void main() {
   test('deve adicionar um novo projeto', () {
     final repository = ProjectRepositoryMock();
 
-    final project = ProjectEntity(
+    final project = Project(
       name: 'Novo Projeto',
       estimate: 34,
       status: ProjectStatus.em_andamento,

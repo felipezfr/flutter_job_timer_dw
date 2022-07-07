@@ -5,7 +5,7 @@ import 'package:flutter_job_timer_dw/app/modules/home/controller/home_controller
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ProjectTile extends StatelessWidget {
-  final ProjectEntity projectEntity;
+  final Project projectEntity;
 
   const ProjectTile({super.key, required this.projectEntity});
 
@@ -37,7 +37,7 @@ class ProjectTile extends StatelessWidget {
 }
 
 class _ProjectName extends StatelessWidget {
-  final ProjectEntity projectEntity;
+  final Project projectEntity;
 
   const _ProjectName({required this.projectEntity});
 
@@ -61,7 +61,7 @@ class _ProjectName extends StatelessWidget {
 }
 
 class _ProjectProgress extends StatelessWidget {
-  final ProjectEntity projectEntity;
+  final Project projectEntity;
 
   const _ProjectProgress({required this.projectEntity});
 

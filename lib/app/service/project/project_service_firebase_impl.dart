@@ -15,13 +15,13 @@ class ProjectServiceFirebaseImpl implements ProjectService {
       : _projectRepository = projectRepository;
 
   @override
-  Future<void> register(ProjectEntity project) async {
+  Future<void> register(Project project) async {
     final projectMap = JsonToProject.toMap(project);
     await _projectRepository.register(projectMap);
   }
 
   @override
-  Future<List<ProjectEntity>> findByStatus(ProjectStatus status) async {
+  Future<List<Project>> findByStatus(ProjectStatus status) async {
     final projectsMap = await _projectRepository.findByStatus(status.index);
 
     return projectsMap.map((proj) => JsonToProject.fromMap(proj)).toList();
@@ -42,7 +42,7 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   }
 
   @override
-  Future<ProjectEntity> findById(String projectId) async {
+  Future<Project> findById(String projectId) async {
     final projectEntity = await _projectRepository.findById(projectId);
     final project = JsonToProject.fromMap(projectEntity);
     return project;

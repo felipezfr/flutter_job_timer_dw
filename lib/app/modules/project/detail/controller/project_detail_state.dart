@@ -9,7 +9,7 @@ enum ProjectDetailStatus {
 }
 
 class ProjectDetailState extends Equatable {
-  late final ProjectEntity? project;
+  late final Project? project;
   late ProjectDetailStatus projectDetailState;
   ProjectDetailState._({
     required this.project,
@@ -26,7 +26,7 @@ class ProjectDetailState extends Equatable {
   List<Object?> get props => [project, projectDetailState];
 
   ProjectDetailState copyWith({
-    ProjectEntity? project,
+    Project? project,
     ProjectDetailStatus? projectDetailState,
   }) {
     return ProjectDetailState._(

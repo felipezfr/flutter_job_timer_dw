@@ -7,13 +7,13 @@ part 'task_state.dart';
 
 class TaskController extends Cubit<TaskStatus> {
   final ProjectService _projectService;
-  late final ProjectEntity _projectModel;
+  late final Project _projectModel;
 
   TaskController({required ProjectService projectService})
       : _projectService = projectService,
         super(TaskStatus.inital);
 
-  void setProject(ProjectEntity project) => _projectModel = project;
+  void setProject(Project project) => _projectModel = project;
 
   Future<void> register(String name, int duration) async {
     emit(TaskStatus.loading);

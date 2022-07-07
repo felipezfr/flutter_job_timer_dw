@@ -10,7 +10,7 @@ class HeaderProjectDetail extends StatelessWidget {
     required this.project,
   }) : super(key: key);
 
-  final ProjectEntity project;
+  final Project project;
 
   @override
   Widget build(BuildContext context) {

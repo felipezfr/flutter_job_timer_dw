@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
-            BlocSelector<HomeController, HomeState, List<ProjectEntity>>(
+            BlocSelector<HomeController, HomeState, List<Project>>(
               bloc: controller,
               selector: (state) => state.projects,
               builder: (context, projects) {

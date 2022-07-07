@@ -58,7 +58,7 @@ class ProjectDetailPage extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
-  final ProjectEntity project;
+  final Project project;
   final ProjectDetailController controller;
   const Body({
     Key? key,

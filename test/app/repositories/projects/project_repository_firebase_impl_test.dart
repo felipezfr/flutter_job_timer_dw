@@ -177,4 +177,63 @@ void main() {
     expect(result['tasks'].last['name'], 'Segunda task');
     expect(result['tasks'].last['duration'], 24);
   });
+
+  test('deve retorar todos projetos com status em andamento em uma stream',
+      () async {
+    final firestore = FakeFirebaseFirestore();
+    await firestore.collection('projects').add(
+      {
+        'name': 'Teste Projeto',
+        'estimate': 120,
+        'status': 0,
+        'tasks': [],
+      },
+    );
+    await firestore.collection('projects').add(
+      {
+        'name': 'Projeto 2',
+        'estimate': 48,
+        'status': 0,
+        'tasks': [],
+      },
+    );
+    await firestore.collection('projects').add(
+      {
+        'name': 'Projeto 3',
+        'estimate': 25,
+        'status': 1,
+        'tasks': [],
+      },
+    );
+
+    final datasource =
+        ProjectRepositoryFirebaseImpl(firebaseFirestore: firestore);
+    final result = datasource.findByStatusStream(0);
+
+    expect(result, emits(isA<List<Map>>()));
+  });
+
+  test('deve retorar um projeto pelo id em uma stream', () async {
+    final firestore = FakeFirebaseFirestore();
+    final project = await firestore.collection('projects').add(
+      {
+        // 'id': 'HdhausdhAdha',
+        'name': 'Teste Projeto',
+        'estimate': 120,
+        'status': 0,
+        'tasks': [],
+      },
+    );
+
+    final datasource =
+        ProjectRepositoryFirebaseImpl(firebaseFirestore: firestore);
+    final result = await datasource.findById(project.id);
+
+    expect(result, isA<Map>());
+    expect(result['id'], project.id);
+    expect(result['name'], 'Teste Projeto');
+    expect(result['estimate'], 120);
+    expect(result['status'], 0);
+    expect(result['tasks'], []);
+  });
 }

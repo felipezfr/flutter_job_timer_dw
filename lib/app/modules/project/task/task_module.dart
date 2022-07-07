@@ -15,7 +15,7 @@ class TaskModule extends Module {
         ChildRoute(
           '/',
           child: (context, args) {
-            final ProjectEntity projectModel = args.data;
+            final Project projectModel = args.data;
             return TaskPage(
               controller: Modular.get()..setProject(projectModel),
             );
