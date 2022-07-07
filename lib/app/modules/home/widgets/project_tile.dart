@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_job_timer_dw/app/core/ui/job_timer_icons.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
-import 'package:flutter_job_timer_dw/app/modules/home/controller/home_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ProjectTile extends StatelessWidget {
@@ -15,7 +14,7 @@ class ProjectTile extends StatelessWidget {
       onTap: () async {
         await Modular.to
             .pushNamed('/project/detail/', arguments: projectEntity);
-        Modular.get<HomeController>().loadProjects();
+        // Modular.get<HomeController>().loadProjects();
       },
       child: Container(
           constraints: const BoxConstraints(maxHeight: 90),

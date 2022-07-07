@@ -1,3 +1,4 @@
+import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
@@ -90,16 +91,32 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
-            BlocSelector<HomeController, HomeState, List<ProjectEntity>>(
+            BlocListener<HomeController, HomeState>(
               bloc: controller,
-              selector: (state) => state.projects,
-              builder: (context, projects) {
-                return SliverList(
-                  delegate: SliverChildListDelegate(projects
-                      .map((e) => ProjectTile(projectEntity: e))
-                      .toList()),
-                );
+              listenWhen: (previous, current) {
+                return previous != current;
               },
+              listener: (context, state) {
+                if (state.status == HomeStatus.failure) {
+                  final message =
+                      state.errorMessage ?? 'Erro ao realizar login';
+                  AsukaSnackbar.alert(message).show();
+                }
+              },
+              child:
+                  BlocSelector<HomeController, HomeState, List<ProjectEntity>>(
+                bloc: controller,
+                selector: (state) => state.projects,
+                builder: (context, projects) {
+                  return SliverList(
+                    delegate: SliverChildListDelegate(
+                      projects
+                          .map((e) => ProjectTile(projectEntity: e))
+                          .toList(),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

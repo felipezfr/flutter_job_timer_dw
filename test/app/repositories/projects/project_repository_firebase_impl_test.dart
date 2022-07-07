@@ -55,7 +55,7 @@ void main() {
 
   test('deve retorar todos projetos com status em andamento', () async {
     final firestore = FakeFirebaseFirestore();
-    final project = await firestore.collection('projects').add(
+    await firestore.collection('projects').add(
       {
         'name': 'Teste Projeto',
         'estimate': 120,
@@ -64,7 +64,7 @@ void main() {
       },
     );
 
-    final project2 = await firestore.collection('projects').add(
+    await firestore.collection('projects').add(
       {
         'name': 'Projeto 2',
         'estimate': 48,
@@ -72,7 +72,7 @@ void main() {
         'tasks': [],
       },
     );
-    final project3 = await firestore.collection('projects').add(
+    await firestore.collection('projects').add(
       {
         'name': 'Projeto 3',
         'estimate': 25,
@@ -93,7 +93,7 @@ void main() {
 
   test('deve retorar todos projetos com status finalizado', () async {
     final firestore = FakeFirebaseFirestore();
-    final project = await firestore.collection('projects').add(
+    await firestore.collection('projects').add(
       {
         'name': 'Teste Projeto',
         'estimate': 120,
@@ -102,7 +102,7 @@ void main() {
       },
     );
 
-    final project2 = await firestore.collection('projects').add(
+    await firestore.collection('projects').add(
       {
         'name': 'Projeto 2',
         'estimate': 48,
