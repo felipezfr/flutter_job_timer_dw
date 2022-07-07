@@ -25,9 +25,6 @@ class ProjectServiceFirebaseImpl implements ProjectService {
     final projectsMap = await _projectRepository.findByStatus(status.index);
 
     return projectsMap.map((proj) => JsonToProject.fromMap(proj)).toList();
-    // return projects
-    //     .map((e) => e.map((map) => ProjectModel.fromMap(map)).toList())
-    //     .first;
   }
 
   @override
@@ -51,5 +48,28 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   @override
   Future<File> getPdfFile(String url) async {
     return await _projectRepository.getFilePathByUrl(url);
+  }
+
+  @override
+  Stream<List<Project>> findByStatusStream(ProjectStatus status) {
+    final projectsStream = _projectRepository.findByStatusStream(status.index);
+
+    return projectsStream.map(
+      (event) => event
+          .map(
+            (e) => JsonToProject.fromMap(e),
+          )
+          .toList(),
+    );
+    // return projectsStream
+    //     .map((e) => e.map((map) => ProjectModel.fromMap(map)).toList())
+    //     .first;
+  }
+
+  @override
+  Stream<Project> findByIdStream(String projectId) {
+    final projectStream = _projectRepository.findByIdStream(projectId);
+
+    return projectStream.map((e) => JsonToProject.fromMap(e));
   }
 }

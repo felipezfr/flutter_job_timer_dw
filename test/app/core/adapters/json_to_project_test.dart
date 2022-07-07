@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
-    'deve converter um map em um objeto do tipo ProjectEntity',
+    'deve converter um map em um objeto do tipo Project',
     () {
       final order = JsonToProject.fromMap({
         'id': 'aZasdAASDnasdj',
@@ -30,7 +30,7 @@ void main() {
     },
   );
 
-  test('deve converter um objeto do tipo ProjectEntity em um Map', () {
+  test('deve converter um objeto do tipo Project em um Map', () {
     final order = Project(
       id: '12345',
       name: 'Projeto Entidade',

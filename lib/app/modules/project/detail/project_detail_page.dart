@@ -144,8 +144,8 @@ class Body extends StatelessWidget {
               TextButton(
                 onPressed: () async {
                   Navigator.pop(context);
-                  await controller.finishProject();
-                  await controller.updateProject();
+                  controller.finishProject();
+                  // await controller.updateProject();
                 },
                 child: const Text(
                   'Confirmar',

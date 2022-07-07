@@ -99,23 +99,35 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepository {
         );
   }
 
-  List<Map> _convert(List<QueryDocumentSnapshot<Map<String, dynamic>>> docs) {
-    return docs
-        .map((document) => {
-              'id': document.id,
-              ...document.data(),
-            })
-        .toList();
-  }
-
   @override
   Stream<List<Map>> findByStatusStream(int status) {
     final ref = _firestore.collection('projects');
 
-    return ref.snapshots().map((querySnap) => querySnap.docs
-        .map(
-          (doc) => doc.data(),
-        )
-        .toList());
+    return ref.snapshots().map(
+          (querySnap) => querySnap.docs
+              // .where((element) => element.data()['status'] == status)
+              .map(
+            (doc) {
+              return {
+                'id': doc.id,
+                ...doc.data(),
+              };
+            },
+          ).toList(),
+        );
+  }
+
+  @override
+  Stream<Map> findByIdStream(String projectId) {
+    final ref = _firestore.collection('projects').doc(projectId);
+
+    return ref.snapshots().map(
+      (doc) {
+        return {
+          'id': doc.id,
+          ...doc.data()!,
+        };
+      },
+    );
   }
 }

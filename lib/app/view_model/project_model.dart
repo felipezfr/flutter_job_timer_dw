@@ -19,7 +19,7 @@
 //     required this.tasks,
 //   });
 
-//   factory ProjectModel.fromEntity(ProjectEntity project) {
+//   factory ProjectModel.fromEntity(Project project) {
 //     // project.tasks.loadSync();
 
 //     return ProjectModel(

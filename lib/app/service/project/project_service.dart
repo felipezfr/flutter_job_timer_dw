@@ -11,4 +11,7 @@ abstract class ProjectService {
   Future<void> finish(String projectId);
   Future<Project> findById(String projectId);
   Future<File> getPdfFile(String url);
+
+  Stream<List<Project>> findByStatusStream(ProjectStatus status);
+  Stream<Project> findByIdStream(String projectId);
 }
