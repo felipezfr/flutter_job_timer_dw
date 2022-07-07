@@ -1,6 +1,6 @@
 import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
 
-class JsonToTask {
+class TaskDTO {
   static ProjectTask fromMap(dynamic map) {
     return ProjectTask(
       id: map['id'],

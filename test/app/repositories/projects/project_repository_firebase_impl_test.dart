@@ -227,13 +227,8 @@ void main() {
 
     final datasource =
         ProjectRepositoryFirebaseImpl(firebaseFirestore: firestore);
-    final result = await datasource.findById(project.id);
+    final result = datasource.findByIdStream(project.id);
 
-    expect(result, isA<Map>());
-    expect(result['id'], project.id);
-    expect(result['name'], 'Teste Projeto');
-    expect(result['estimate'], 120);
-    expect(result['status'], 0);
-    expect(result['tasks'], []);
+    expect(result, emits(isA<Map>()));
   });
 }

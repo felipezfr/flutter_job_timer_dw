@@ -1,4 +1,4 @@
-import 'package:flutter_job_timer_dw/app/core/adapters/json_to_project.dart';
+import 'package:flutter_job_timer_dw/app/core/adapters/project_dto.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
@@ -8,7 +8,7 @@ void main() {
   test(
     'deve converter um map em um objeto do tipo Project',
     () {
-      final order = JsonToProject.fromMap({
+      final order = ProjectDTO.fromMap({
         'id': 'aZasdAASDnasdj',
         'name': 'Teste Projeto',
         'estimate': 120,
@@ -39,7 +39,7 @@ void main() {
       tasks: [ProjectTask(name: 'Task1', duration: 22)],
     );
 
-    final map = JsonToProject.toMap(order);
+    final map = ProjectDTO.toMap(order);
 
     expect(map, isA<Map<String, dynamic>>());
     expect(map['id'], '12345');

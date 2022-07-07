@@ -1,5 +1,5 @@
-import 'package:flutter_job_timer_dw/app/core/adapters/json_to_project.dart';
-import 'package:flutter_job_timer_dw/app/core/adapters/json_to_task.dart';
+import 'package:flutter_job_timer_dw/app/core/adapters/project_dto.dart';
+import 'package:flutter_job_timer_dw/app/core/adapters/task_dto.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
@@ -16,7 +16,7 @@ class ProjectServiceFirebaseImpl implements ProjectService {
 
   @override
   Future<void> register(Project project) async {
-    final projectMap = JsonToProject.toMap(project);
+    final projectMap = ProjectDTO.toMap(project);
     await _projectRepository.register(projectMap);
   }
 
@@ -24,12 +24,14 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   Future<List<Project>> findByStatus(ProjectStatus status) async {
     final projectsMap = await _projectRepository.findByStatus(status.index);
 
-    return projectsMap.map((proj) => JsonToProject.fromMap(proj)).toList();
+    return projectsMap.map((proj) => ProjectDTO.fromMap(proj)).toList();
   }
 
   @override
   Future<void> addTask(String projectId, ProjectTask task) async {
-    final taskMap = JsonToTask.toMap(task);
+    final taskMap = TaskDTO.toMap(task);
+    taskMap['id'] =
+        taskMap['id'] ?? DateTime.now().microsecondsSinceEpoch.toString();
     await _projectRepository.addTask(projectId, taskMap);
   }
 
@@ -41,7 +43,7 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   @override
   Future<Project> findById(String projectId) async {
     final projectEntity = await _projectRepository.findById(projectId);
-    final project = JsonToProject.fromMap(projectEntity);
+    final project = ProjectDTO.fromMap(projectEntity);
     return project;
   }
 
@@ -57,7 +59,7 @@ class ProjectServiceFirebaseImpl implements ProjectService {
     return projectsStream.map(
       (event) => event
           .map(
-            (e) => JsonToProject.fromMap(e),
+            (e) => ProjectDTO.fromMap(e),
           )
           .toList(),
     );
@@ -70,6 +72,6 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   Stream<Project> findByIdStream(String projectId) {
     final projectStream = _projectRepository.findByIdStream(projectId);
 
-    return projectStream.map((e) => JsonToProject.fromMap(e));
+    return projectStream.map((e) => ProjectDTO.fromMap(e));
   }
 }

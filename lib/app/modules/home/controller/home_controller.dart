@@ -12,14 +12,14 @@ class HomeController extends Cubit<HomeState> {
 
   HomeController(
       {required AuthService authService,
-      required ProjectService projectRepository})
+      required ProjectService projectService})
       : _authService = authService,
-        _projectService = projectRepository,
+        _projectService = projectService,
         super(HomeState.initial());
 
   Future<void> signOut() async {
+    emit(state.copyWith(status: HomeStatus.loading));
     try {
-      emit(state.copyWith(status: HomeStatus.loading));
       await _authService.signOut();
     } catch (e) {
       emit(
@@ -31,6 +31,7 @@ class HomeController extends Cubit<HomeState> {
 
   Future<void> loadProjects() async {
     emit(state.copyWith(status: HomeStatus.loading));
+
     _projectService.findByStatusStream(state.projectFilter).listen(
       (projects) {
         // emit(state.copyWith(status: HomeStatus.loading));
@@ -46,13 +47,23 @@ class HomeController extends Cubit<HomeState> {
           ),
         );
       },
-    );
+    ).onError((e) {
+      emit(state.copyWith(
+          status: HomeStatus.failure,
+          errorMessage: 'Erro ao carregar projetos'));
+    });
   }
 
   Future<void> filter(ProjectStatus status) async {
     emit(state.copyWith(status: HomeStatus.loading, projectFilter: status));
-    final projects = await _projectService.findByStatus(state.projectFilter);
-    emit(state.copyWith(status: HomeStatus.complete, projects: projects));
+    try {
+      final projects = await _projectService.findByStatus(state.projectFilter);
+      emit(state.copyWith(status: HomeStatus.complete, projects: projects));
+    } catch (e) {
+      emit(state.copyWith(
+          status: HomeStatus.failure,
+          errorMessage: 'Erro ao carregar projetos'));
+    }
   }
 
   // Future<void> loadProjects() async {

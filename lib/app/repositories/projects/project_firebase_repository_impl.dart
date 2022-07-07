@@ -17,34 +17,13 @@ class ProjectRepositoryFirebaseImpl extends ProjectRepository {
     final doc = _firestore.collection('projects').doc(projectId);
     taskEntity['id'] =
         taskEntity['id'] ?? DateTime.now().microsecondsSinceEpoch.toString();
-    // final task = {
-    //   'id': taskId,
-    //   ...taskEntity,
-    // };
+
     await doc.update(
       {
         'tasks': FieldValue.arrayUnion([taskEntity]),
       },
     );
   }
-
-  // @override
-  // Stream<Map> findById(String projectId) {
-  //   try {
-  //     final ref = _firestore.collection('projects');
-  //     final snapshot = ref.doc(projectId).get();
-  //     var data;
-
-  //     snapshot.then((value) {
-  //       return value.data();
-  //       // return data;
-  //     });
-
-  //     return data;
-  //   } catch (e) {
-  //     throw Exception(e.toString());
-  //   }
-  // }
 
   @override
   Future<Map> findById(String projectId) async {
