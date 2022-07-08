@@ -13,7 +13,7 @@ void main() {
   late AuthServiceMock authService;
   late HomeController bloc;
 
-  final proj = Project(
+  final proj = ProjectEntity(
       name: 'name', estimate: 2, status: ProjectStatus.em_andamento, tasks: []);
 
   setUp(

@@ -3,8 +3,8 @@ import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 
 class ProjectDTO {
-  static Project fromMap(dynamic json) {
-    return Project(
+  static ProjectEntity fromMap(dynamic json) {
+    return ProjectEntity(
       id: json['id'],
       name: json['name'],
       estimate: json['estimate'].toInt(),
@@ -17,7 +17,7 @@ class ProjectDTO {
     );
   }
 
-  static Map<String, dynamic> toMap(Project proj) {
+  static Map<String, dynamic> toMap(ProjectEntity proj) {
     return {
       'id': proj.id,
       'name': proj.name,

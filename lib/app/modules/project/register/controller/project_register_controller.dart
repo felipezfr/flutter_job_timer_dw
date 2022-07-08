@@ -16,7 +16,7 @@ class ProjectRegisterController extends Cubit<ProjectRegisterStatus> {
   Future<void> register(String name, int estimate) async {
     try {
       emit(ProjectRegisterStatus.loading);
-      final project = Project(
+      final project = ProjectEntity(
         name: name,
         estimate: estimate,
         tasks: [],

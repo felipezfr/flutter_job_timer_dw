@@ -103,7 +103,8 @@ class HomePage extends StatelessWidget {
                   AsukaSnackbar.alert(message).show();
                 }
               },
-              child: BlocSelector<HomeController, HomeState, List<Project>>(
+              child:
+                  BlocSelector<HomeController, HomeState, List<ProjectEntity>>(
                 bloc: controller,
                 selector: (state) => state.projects,
                 builder: (context, projects) {

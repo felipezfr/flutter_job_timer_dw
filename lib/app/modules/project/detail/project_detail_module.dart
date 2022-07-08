@@ -15,7 +15,7 @@ class ProjectDetailModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) {
-          final Project projectModel = args.data;
+          final ProjectEntity projectModel = args.data;
           return ProjectDetailPage(
               controller: Modular.get()..setProject(projectModel));
         })

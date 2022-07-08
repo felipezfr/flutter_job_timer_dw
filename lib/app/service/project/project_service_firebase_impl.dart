@@ -1,11 +1,10 @@
+import 'dart:io';
 import 'package:flutter_job_timer_dw/app/core/adapters/project_dto.dart';
 import 'package:flutter_job_timer_dw/app/core/adapters/task_dto.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_entity.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_status.dart';
 import 'package:flutter_job_timer_dw/app/entities/project_task.dart';
 import 'package:flutter_job_timer_dw/app/repositories/projects/project_repository.dart';
-import 'dart:io';
-
 import 'package:flutter_job_timer_dw/app/service/project/project_service.dart';
 
 class ProjectServiceFirebaseImpl implements ProjectService {
@@ -15,13 +14,13 @@ class ProjectServiceFirebaseImpl implements ProjectService {
       : _projectRepository = projectRepository;
 
   @override
-  Future<void> register(Project project) async {
+  Future<void> register(ProjectEntity project) async {
     final projectMap = ProjectDTO.toMap(project);
     await _projectRepository.register(projectMap);
   }
 
   @override
-  Future<List<Project>> findByStatus(ProjectStatus status) async {
+  Future<List<ProjectEntity>> findByStatus(ProjectStatus status) async {
     final projectsMap = await _projectRepository.findByStatus(status.index);
 
     return projectsMap.map((proj) => ProjectDTO.fromMap(proj)).toList();
@@ -41,7 +40,7 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   }
 
   @override
-  Future<Project> findById(String projectId) async {
+  Future<ProjectEntity> findById(String projectId) async {
     final projectEntity = await _projectRepository.findById(projectId);
     final project = ProjectDTO.fromMap(projectEntity);
     return project;
@@ -53,7 +52,7 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   }
 
   @override
-  Stream<List<Project>> findByStatusStream(ProjectStatus status) {
+  Stream<List<ProjectEntity>> findByStatusStream(ProjectStatus status) {
     final projectsStream = _projectRepository.findByStatusStream(status.index);
 
     return projectsStream.map(
@@ -69,7 +68,7 @@ class ProjectServiceFirebaseImpl implements ProjectService {
   }
 
   @override
-  Stream<Project> findByIdStream(String projectId) {
+  Stream<ProjectEntity> findByIdStream(String projectId) {
     final projectStream = _projectRepository.findByIdStream(projectId);
 
     return projectStream.map((e) => ProjectDTO.fromMap(e));

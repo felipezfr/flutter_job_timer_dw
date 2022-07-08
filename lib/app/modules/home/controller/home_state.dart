@@ -12,7 +12,7 @@ enum HomeStatus {
 
 class HomeState extends Equatable {
   final HomeStatus status;
-  final List<Project> projects;
+  final List<ProjectEntity> projects;
   final ProjectStatus projectFilter;
   final String? errorMessage;
 
@@ -40,7 +40,7 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     HomeStatus? status,
-    List<Project>? projects,
+    List<ProjectEntity>? projects,
     ProjectStatus? projectFilter,
     String? errorMessage,
   }) {

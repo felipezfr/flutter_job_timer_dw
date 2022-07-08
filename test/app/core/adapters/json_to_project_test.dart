@@ -21,7 +21,7 @@ void main() {
         ],
       });
 
-      expect(order, isA<Project>());
+      expect(order, isA<ProjectEntity>());
       expect(order.id, 'aZasdAASDnasdj');
       expect(order.status, ProjectStatus.em_andamento);
       expect(order.tasks.length, 1);
@@ -31,7 +31,7 @@ void main() {
   );
 
   test('deve converter um objeto do tipo Project em um Map', () {
-    final order = Project(
+    final order = ProjectEntity(
       id: '12345',
       name: 'Projeto Entidade',
       estimate: 20,
